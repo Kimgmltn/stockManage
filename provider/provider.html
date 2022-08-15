@@ -109,18 +109,9 @@
 </body>
 <script>
   const httpRequest = new XMLHttpRequest();
-
-  window.onload = function(){
-    callStocks();
-  }
-
-  // const stockCds =  document.querySelectorAll('.stockCds');
-  const stockCds =  document.getElementsByClassName('stockCds');
-  console.log(stockCds)    
-
-  const callStocks = function(){
+   const callStocks = function(){
     const stockDiv = document.querySelector('#stocks');
-    httpRequest.onreadystatechange = () => {
+     httpRequest.onreadystatechange =  () => {
       if(httpRequest.readyState === XMLHttpRequest.DONE){
         if(httpRequest.status === 200){
           const response = httpRequest.response;
@@ -139,22 +130,43 @@
     console.log()
     for(var i=0; i < response.length; i++){
       html += `
-                <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="stockCd" value="${response[i].stockCd}" class="sr-only stockCds" aria-labelledby="size-choice-0-label">
-                  <span id="stockCd-${i}-label"> ${response[i].stockName} </span>
+                <label class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
+                  <input type="radio" name="stockCd" value="${response[i].stockCd}" class=" sr-only" aria-labelledby="stockCd-${i}-label">
+                  <span> ${response[i].stockName} </span>
                   <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
                 </label>
               `;
     }
     target.innerHTML = html;
   }
-
-  
+ 
 
   const provide = function(){
-
   }
 
+  
+  const bindStocks = function(){
+    // debugger stockCds를 다 가져옴
+    const stockCds =  document.getElementsByClassName('stockCds');
 
+    //가져오 Cds리스트를 반복문으로 클릭 이벤트 추가
+    for(let item of stockCds){
+      //item.childNodes[1] input위치
+      item.childNodes[1].addEventListener("click",()=>{        
+        //change Bg color 클릭이벤트 발생시 전체 리스트에서 input 체크 확인 후 클래스 추가 및 삭제로 배경 변경
+        for(let item of stockCds){
+          // checked가 true 시 add 아니면 remove
+          item.childNodes[1].checked ? item.classList.add("bg-black/25") : item.classList.remove("bg-black/25")
+        }
+      })
+    }
+  }
+
+  callStocks()
+  
+  window.onload = function(){
+    //페이지 로드 후에 바인드
+    bindStocks()
+  }
 </script>
 </html>
