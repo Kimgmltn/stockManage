@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>갈비대첩 재고관리 사이트</title>
+</head>
+<body>
+    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
+        <div class="max-w-md w-full space-y-8">
+          <div>
+            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">물품을 이름을<br> 입력해주세요.</h2>
+          </div>
+
+          <div class="mt-10">          
+          <div class="mt-8 space-y-6">
+            <div class="rounded-md shadow-sm -space-y-px">
+                <div>
+                <label for="stockName" class="sr-only">count</label>
+                <input id="stockName" name="stockName" type="text" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="돼지갈비">
+              </div>
+            </div>
+      
+            <div>
+              <button type="button" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                보내기
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+</body>
+<script>  
+  const httpRequest =new XMLHttpRequest();
+  const inputBox = document.querySelector('input[name=stockName]');
+  const submitButton = document.querySelector('button[type=button]')
+
+  submitButton.addEventListener('click',(e)=>{e.preventDefault(); sendStockName()})
+
+  inputBox.addEventListener('keyup',(e)=>{ 
+    e.preventDefault();
+    // if(e.keyCode === 13){
+    //     submitButton.click();
+    // }
+    // console.log(e)
+    if(e.key === 'Enter'){
+        submitButton.click();
+    }
+    // if(e.code === 'Enter'){
+    //     console.log("eeeeee")
+    //     submitButton.click();
+    // }
+  })
+  
+   const sendStockName = function(){
+    // httpRequest = ;
+    const stockDiv = document.querySelector('#stocks');
+    httpRequest.open('POST', `http://localhost:8000/api/provider/stock`);
+
+    httpRequest.onreadystatechange =  () => {
+      if(httpRequest.readyState === XMLHttpRequest.DONE){
+        if(httpRequest.status === 200){
+          alert("성공");
+          window.location.reload();
+        }else{
+          alert("실패했습니다.");
+        }
+      }
+    }
+
+    
+    httpRequest.setRequestHeader('Content-type', 'application/json')
+    httpRequest.setRequestHeader('Cache-Control', 'no-cache')
+    const name =document.querySelector('input[name=stockName]').value
+    httpRequest.responseType = 'json';
+    httpRequest.send(name);
+  }
+
+  window.lonload = inputBox.focus();
+
+</script>
+</html>
