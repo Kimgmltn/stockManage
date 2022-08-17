@@ -2,7 +2,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
     <title>갈비대첩 재고관리 사이트</title>
 </head>
 <body>
@@ -107,44 +106,50 @@
         </div>
       </div>
 </body>
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="/js/http.js"></script>
 <script>
-  const httpRequest = new XMLHttpRequest();
-   const callStocks = function(){
-    const stockDiv = document.querySelector('#stocks');
-     httpRequest.onreadystatechange =  () => {
-      if(httpRequest.readyState === XMLHttpRequest.DONE){
-        if(httpRequest.status === 200){
-          const response = httpRequest.response;
-          createStocksHtml(response, stockDiv);
-        }
-      }
-    }
 
-    httpRequest.open('GET', 'http://localhost:8080/api/provider/stocks');
-    httpRequest.responseType = 'json';
-    httpRequest.send();
+   const callStocks = function(){
+    const response = get('http://localhost:8000/api/provider/stocks');
+    if(response){
+      const stockDiv = document.querySelector('#stocks');
+      createStocksHtml(response, stockDiv);
+    }else{
+      alert('fail')
+    }
   }
 
   const createStocksHtml = function(response, target){
     let html = '';
-    console.log()
     for(var i=0; i < response.length; i++){
+      // html += `
+      //           <label class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
+      //             <input type="radio" name="stockCd" value="${response[i].stockCd}" class=" sr-only" aria-labelledby="stockCd-${i}-label">
+      //             <span> ${response[i].stockName} </span>
+      //             <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
+      //           </label>
+      //         `;
+
+          // html += `
+          //       <label for="stockCd-${i}-label" class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
+          //         <input id="stockCd-${i}-label" type="radio" name="stockCd" value="${response[i].stockCd}" class=" sr-only" aria-labelledby="stockCd-${i}-label">
+          //         <span> ${response[i].stockName} </span>
+          //         <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
+          //       </label>
+          //     `;
+
       html += `
-                <label class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="stockCd" value="${response[i].stockCd}" class=" sr-only" aria-labelledby="stockCd-${i}-label">
-                  <span> ${response[i].stockName} </span>
-                  <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-                </label>
+                <input type="radio" name="stockCd" value="${response[i].stockCd}" class="sr-only" id="stockCd-${i}-label">        
+                <label class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">${response[i].stockName}</label>
               `;
     }
     target.innerHTML = html;
   }
- 
 
   const provide = function(){
   }
 
-  
   const bindStocks = function(){
     // debugger stockCds를 다 가져옴
     const stockCds =  document.getElementsByClassName('stockCds');
@@ -156,7 +161,7 @@
         //change Bg color 클릭이벤트 발생시 전체 리스트에서 input 체크 확인 후 클래스 추가 및 삭제로 배경 변경
         for(let item of stockCds){
           // checked가 true 시 add 아니면 remove
-          item.childNodes[1].checked ? item.classList.add("bg-black/25") : item.classList.remove("bg-black/25")
+          item.childNodes[1].checked ? item.classList.add('Active') : item.classList.remove("Active")
         }
       })
     }

@@ -31,7 +31,7 @@
       </div>
 </body>
 <script>  
-  const httpRequest =new XMLHttpRequest();
+
   const inputBox = document.querySelector('input[name=stockName]');
   const submitButton = document.querySelector('button[type=button]')
 
@@ -52,31 +52,21 @@
     // }
   })
   
-   const sendStockName = function(){
-    // httpRequest = ;
-    const stockDiv = document.querySelector('#stocks');
-    httpRequest.open('POST', `http://localhost:8000/api/provider/stock`);
-
-    httpRequest.onreadystatechange =  () => {
-      if(httpRequest.readyState === XMLHttpRequest.DONE){
-        if(httpRequest.status === 200){
-          alert("성공");
-          window.location.reload();
-        }else{
-          alert("실패했습니다.");
-        }
-      }
-    }
-
+  const sendStockName = function(){
+    const name = document.querySelector('input[name=stockName]').value;
+    const response = post('http://localhost:8000/api/provider/stock', name);
     
-    httpRequest.setRequestHeader('Content-type', 'application/json')
-    httpRequest.setRequestHeader('Cache-Control', 'no-cache')
-    const name =document.querySelector('input[name=stockName]').value
-    httpRequest.responseType = 'json';
-    httpRequest.send(name);
+    if(response){
+      alert('성공');
+    }else{
+      alert('실패');
+      return false;
+    }
+    window.location.reload();
   }
 
-  window.lonload = inputBox.focus();
+  window.onload = inputBox.focus();
 
 </script>
+<script src="/js/http.js"></script>
 </html>
