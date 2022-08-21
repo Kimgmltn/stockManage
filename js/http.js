@@ -28,7 +28,8 @@ const get = function(url, param){
     let response;
 
     httpRequest.open('GET', url, false);
-     httpRequest.onreadystatechange =  () => {
+     
+    httpRequest.onreadystatechange = () => {
       if(httpRequest.readyState === XMLHttpRequest.DONE){
         if(httpRequest.status === 200){
           response = JSON.parse(httpRequest.response);

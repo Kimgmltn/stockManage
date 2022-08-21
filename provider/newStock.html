@@ -1,72 +1,157 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <script src="https://cdn.tailwindcss.com"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" rel="stylesheet" href="/css/bootstrap.min.css">
     <title>갈비대첩 재고관리 사이트</title>
+    <style>
+      .b {border: solid 1px black}
+    </style>
 </head>
 <body>
-    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8">
-          <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">물품을 이름을<br> 입력해주세요.</h2>
+      <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 >재고물품을 선택한 후 <br>수량을 입력해 주세요.</h1>
           </div>
+        </div>
+      </section>
 
-          <div class="mt-10">          
-          <div class="mt-8 space-y-6">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div>
-                <label for="stockName" class="sr-only">count</label>
-                <input id="stockName" name="stockName" type="text" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="돼지갈비">
-              </div>
-            </div>
-      
-            <div>
-              <button type="button" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                보내기
-              </button>
-            </div>
+
+      <div class="container w-50">
+        <div class="form-floating mb-2">
+          <input type="text" name="stockName" id="stockName" class="form-control">
+          <label for="stockName">재고물품 명</label>
+        </div>
+        <div class="d-grid">
+          <button class="btn btn-primary" type="button">저장</button>
+          <button class="visually-hidden" type="button" data-bs-toggle="modal" data-bs-target="#success-modal" id="call-modal"></button>
+        </div>  
+      </div>  
+
+      <div class="container text-center min-vw-50 min-vh-50 p-3 mt-5 visually-hidden" id="stock-container"> 
+        <h3>현재 등록되어있는 물품</h3>
+        <div class="row row-cols-3" id="stocks">
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-1">
+            <label class="btn btn-outline-primary w-100 h-100" for="stock-1">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-2">
+            <label class="btn btn-outline-primary w-100" for="stock-2">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-3">
+            <label class="btn btn-outline-primary w-100" for="stock-3">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-4">
+            <label class="btn btn-outline-primary w-100" for="stock-4">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-5">
+            <label class="btn btn-outline-primary w-100" for="stock-5">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-6">
+            <label class="btn btn-outline-primary w-100" for="stock-6">돼지갈비</label>
           </div>
         </div>
       </div>
+
+
+      <div class="modal" tabindex="-1" id="success-modal">
+        <div class="modal-dialog modal-dialog-centered">
+          <div class="modal-content">
+            <div class="modal-body text-center">
+              <p>저장되었습니다.</p>
+            </div>
+            <div class="visually-hidden" data-bs-dismiss="modal" id="close-modal"></div>
+          </div>
+        </div>
+      </div>
+
+      
 </body>
+<script src="/js/http.js"></script>
+<script defer src="/js/bootstrap.bundle.min.js"></script>
 <script>  
 
   const inputBox = document.querySelector('input[name=stockName]');
-  const submitButton = document.querySelector('button[type=button]')
+  const submitButton = document.querySelector('button[type=button]');
+  const modal = document.getElementById('success-modal');
+  const callModal = document.getElementById('call-modal');
+  const closeModal = document.getElementById('close-modal');
 
+  modal.addEventListener('shown.bs.modal', () => {
+    setTimeout(()=> {
+      closeModal.click();
+      inputBox.value = '';
+      inputBox.focus();
+      callStocks();  
+    }, 1000)
+  })
+
+  // 저장버튼 누르면 데이터 전송
   submitButton.addEventListener('click',(e)=>{e.preventDefault(); sendStockName()})
 
+  // 엔터누르면 저장버튼 누르게 이벤트 부여
   inputBox.addEventListener('keyup',(e)=>{ 
     e.preventDefault();
-    // if(e.keyCode === 13){
-    //     submitButton.click();
-    // }
-    // console.log(e)
     if(e.key === 'Enter'){
         submitButton.click();
     }
-    // if(e.code === 'Enter'){
-    //     console.log("eeeeee")
-    //     submitButton.click();
-    // }
   })
   
+  // 재고물품 등록
   const sendStockName = function(){
     const name = document.querySelector('input[name=stockName]').value;
     const response = post('http://localhost:8000/api/provider/stock', name);
     
     if(response){
-      alert('성공');
+      // alert('저장되었습니다.')
+      callModal.click();
     }else{
       alert('실패');
       return false;
     }
-    window.location.reload();
+    
+    // window.location.reload();
   }
+
+  const callStocks = function(){
+    const response = get('http://localhost:8000/api/provider/stocks');
+    if(response){
+      const stockDiv = document.querySelector('#stocks');
+      createStocksHtml(response, stockDiv);
+    }else{
+      alert('fail')
+    }
+  }
+
+  const createStocksHtml = function(response, target){
+    let html = '';
+    if(response.length > 0){
+      for(var i=0; i < response.length; i++){
+        html += `
+                <div class="col pb-2">
+                  <input type="radio" name="stockId" class="btn-check" autocomplete="off" id="stock-${i}">
+                  <label class="btn btn-outline-primary w-100 h-100" for="stock-${i}">${response[i].stockName}</label> 
+                </div>
+                `;
+      }
+      target.innerHTML = html;
+      document.querySelector('#stock-container').classList.remove('visually-hidden');
+    }
+    
+  }
+
+  const provide = function(){
+  }
+
+  callStocks()
 
   window.onload = inputBox.focus();
 
 </script>
-<script src="/js/http.js"></script>
 </html>

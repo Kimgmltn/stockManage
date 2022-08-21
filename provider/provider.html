@@ -1,117 +1,68 @@
 <!DOCTYPE html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" rel="stylesheet" href="/css/bootstrap.min.css">
     <title>갈비대첩 재고관리 사이트</title>
+    <style>
+      .b {border: solid 1px black}
+    </style>
 </head>
 <body>
-    <div class="min-h-full flex items-center justify-center py-12 px-4 sm:px-6 lg:px-8">
-        <div class="max-w-md w-full space-y-8">
-          <div>
-            <h2 class="mt-6 text-center text-3xl font-extrabold text-gray-900">재고물품을 선택한 후<br> 수량을 입력해주세요.</h2>
+      <section class="py-5 text-center container">
+        <div class="row py-lg-5">
+          <div class="col-lg-6 col-md-8 mx-auto">
+            <h1 >재고물품을 선택한 후 <br>수량을 입력해 주세요.</h1>
           </div>
-
-          <div class="mt-10">
-            <div class="flex items-center justify-between">
-              <h4 class="text-sm text-gray-900 font-medium">종류</h4>
-            </div>
-
-            <fieldset class="mt-4">
-              <legend class="sr-only">종류</legend>
-              <div class="grid grid-cols-4 gap-4" id="stocks">
-                <!-- Active: "ring-2 ring-indigo-500" -->
-                <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="size-choice" value="돼지갈비" class="sr-only" aria-labelledby="size-choice-0-label">
-                  <span id="size-choice-0-label"> 돼지갈비 </span> -->
-
-                  <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                  <!-- <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-                </label> -->
-
-                <!-- Active: "ring-2 ring-indigo-500" -->
-                <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="size-choice" value="소 양념갈비" class="sr-only" aria-labelledby="size-choice-1-label">
-                  <span id="size-choice-1-label"> 소 양념갈비 </span> -->
-
-                  <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                  <!-- <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-                </label> -->
-
-                <!-- Active: "ring-2 ring-indigo-500" -->
-                <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="size-choice" value="매운 돼지갈비찜" class="sr-only" aria-labelledby="size-choice-2-label">
-                  <span id="size-choice-2-label"> 매운 돼지갈비찜 </span> -->
-
-                  <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                  <!-- <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-                </label> -->
-
-                <!-- Active: "ring-2 ring-indigo-500" -->
-                <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="size-choice" value="소 갈비찜" class="sr-only" aria-labelledby="size-choice-3-label">
-                  <span id="size-choice-3-label"> 소 갈비찜 </span> -->
-
-                  <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                  <!-- <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-                </label> -->
-
-                <!-- Active: "ring-2 ring-indigo-500" -->
-                <!-- <label class="group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-                  <input type="radio" name="size-choice" value="소 생갈비" class="sr-only" aria-labelledby="size-choice-4-label">
-                  <span id="size-choice-4-label"> 소 생갈비 </span> -->
-
-                  <!--
-                    Active: "border", Not Active: "border-2"
-                    Checked: "border-indigo-500", Not Checked: "border-transparent"
-                  -->
-                  <!-- <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-                </label> -->
-              </div>
-            </fieldset>
-          </div>
-
-          
-          <form class="mt-8 space-y-6">
-            <div class="rounded-md shadow-sm -space-y-px">
-                <div class="flex items-center justify-between">
-                    <h4 class="text-sm text-gray-900 font-medium">갯수</h4>
-                </div>
-                <br>
-            <div>
-                <label for="count" class="sr-only">count</label>
-                <input id="count" name="count" type="text" class="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm" placeholder="갯수">
-              </div>
-            </div>
-      
-            <div>
-              <button type="submit" class="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
-                보내기
-              </button>
-            </div>
-          </form>
-
-
         </div>
+      </section>
+      
+      <div class="container text-center min-vw-50 min-vh-50 p-3">
+        <div class="row row-cols-3" id="stocks">
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-1">
+            <label class="btn btn-outline-primary w-100 h-100" for="stock-1">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-2">
+            <label class="btn btn-outline-primary w-100" for="stock-2">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-3">
+            <label class="btn btn-outline-primary w-100" for="stock-3">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-4">
+            <label class="btn btn-outline-primary w-100" for="stock-4">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-5">
+            <label class="btn btn-outline-primary w-100" for="stock-5">돼지갈비</label>
+          </div>
+          <div class="col pb-2">
+            <input type="radio" name="stockCd" class="btn-check stockCds" autocomplete="off" id="stock-6">
+            <label class="btn btn-outline-primary w-100" for="stock-6">돼지갈비</label>
+          </div>
+        </div>
+
       </div>
+
+      <div class="container">
+        <div class="form-floating">
+          <input type="text" name="count" id="count" class="form-control">
+          <label for="count">수량</label>
+        </div>
+        
+      </div>  
+      
 </body>
-<script src="https://cdn.tailwindcss.com"></script>
 <script src="/js/http.js"></script>
+<script defer src="/js/bootstrap.bundle.min.js"></script>
 <script>
 
-   const callStocks = function(){
+  const callStocks = function(){
     const response = get('http://localhost:8000/api/provider/stocks');
+    console.log(response)
     if(response){
       const stockDiv = document.querySelector('#stocks');
       createStocksHtml(response, stockDiv);
@@ -123,25 +74,11 @@
   const createStocksHtml = function(response, target){
     let html = '';
     for(var i=0; i < response.length; i++){
-      // html += `
-      //           <label class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-      //             <input type="radio" name="stockCd" value="${response[i].stockCd}" class=" sr-only" aria-labelledby="stockCd-${i}-label">
-      //             <span> ${response[i].stockName} </span>
-      //             <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-      //           </label>
-      //         `;
-
-          // html += `
-          //       <label for="stockCd-${i}-label" class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">
-          //         <input id="stockCd-${i}-label" type="radio" name="stockCd" value="${response[i].stockCd}" class=" sr-only" aria-labelledby="stockCd-${i}-label">
-          //         <span> ${response[i].stockName} </span>
-          //         <span class="absolute -inset-px rounded-md pointer-events-none" aria-hidden="true"></span>
-          //       </label>
-          //     `;
-
       html += `
-                <input type="radio" name="stockCd" value="${response[i].stockCd}" class="sr-only" id="stockCd-${i}-label">        
-                <label class="stockCds group relative border rounded-md py-3 px-4 flex items-center justify-center text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none sm:flex-1 bg-white shadow-sm text-gray-900 cursor-pointer">${response[i].stockName}</label>
+              <div class="col pb-2">
+                <input type="radio" name="stockId" class="btn-check" autocomplete="off" id="stock-${i}">
+                <label class="btn btn-outline-primary w-100 h-100" for="stock-${i}">${response[i].stockName}</label> 
+              </div>
               `;
     }
     target.innerHTML = html;
@@ -150,28 +87,6 @@
   const provide = function(){
   }
 
-  const bindStocks = function(){
-    // debugger stockCds를 다 가져옴
-    const stockCds =  document.getElementsByClassName('stockCds');
-
-    //가져오 Cds리스트를 반복문으로 클릭 이벤트 추가
-    for(let item of stockCds){
-      //item.childNodes[1] input위치
-      item.childNodes[1].addEventListener("click",()=>{        
-        //change Bg color 클릭이벤트 발생시 전체 리스트에서 input 체크 확인 후 클래스 추가 및 삭제로 배경 변경
-        for(let item of stockCds){
-          // checked가 true 시 add 아니면 remove
-          item.childNodes[1].checked ? item.classList.add('Active') : item.classList.remove("Active")
-        }
-      })
-    }
-  }
-
   callStocks()
-  
-  window.onload = function(){
-    //페이지 로드 후에 바인드
-    bindStocks()
-  }
 </script>
 </html>
